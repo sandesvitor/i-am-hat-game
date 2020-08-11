@@ -6,10 +6,14 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5f;
+    [SerializeField]
+    private float _sensitivityX = 2f;
+
     private CharacterController _controller;
     private Hat_Player _hat;
     private Target _target;
     private UIManager _uiManager;
+    private DialogueManager _dialogueManager;
 
     void Start()
     {
@@ -17,27 +21,33 @@ public class Player : MonoBehaviour
         _hat = GameObject.Find("Hat_Player").GetComponent<Hat_Player>();
         _target = GameObject.Find("TARGET").GetComponent<Target>();
         _uiManager = GameObject.Find("UI_Manager").GetComponent<UIManager>();
+        _dialogueManager = GameObject.Find("Dialogue_Manager").GetComponent<DialogueManager>();
 
 
         if (_controller == null) {
             Debug.LogError("Character Controller Component is NULL.");
         }
-
         // NULL EXCEPTION WHEN HAT CHANGES PARENTING BUT PLAYER
         // STAYS IN THE FIRST GAME OBJECT!
         if (_hat == null) {
             Debug.LogError("Hat component is NULL.");
-        }
-        
+        }        
         if(_target == null){
             Debug.LogError("Target component is NULL.");
-        }   
+        }
+        if(_uiManager == null) {
+            Debug.LogError("UI Manager component is NULL.");
+        }
+        if(_dialogueManager == null) {
+            Debug.LogError("Dialogue Manager component is NULL.");
+        }
 
     }
 
     void Update()
     {
         CalculatingMovement();
+        //LookX();
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             _target.DestroyOwnHat();
@@ -55,6 +65,14 @@ public class Player : MonoBehaviour
         _controller.Move(velocity * Time.deltaTime);
     }
 
+    void LookX() {
+        Vector3 newRotation = transform.localEulerAngles;
+        float mouseX = Input.GetAxis("Mouse X");
+
+        newRotation.y += mouseX * _sensitivityX;
+        transform.localEulerAngles = newRotation;
+    }
+
     void TransferHat(GameObject newPlayer) {
 
         newPlayer.GetComponent<Player>().enabled = true;
@@ -70,21 +88,50 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
 
-        
 
 
-        if (this.transform.tag == "Player" && other.tag == "NPC") {
-            
-            if (other.transform.Find("Hat_NPC") == null) {
+        if (this.transform.tag == "Player" && other.tag == "NPC") {       
 
-                TransferHat(other.gameObject);
 
-            } else {
+            switch (other.name) {
+                case "BARMAN":
+                    other.transform.GetComponent<DialogueTrigger>().TriggerDialog();
+                    break;
+                case "DRUNK_GUY":
+                    other.transform.GetComponent<DialogueTrigger>().TriggerDialog();
+                    break;
+                case "SHADY_GUY":
+                    other.transform.GetComponent<DialogueTrigger>().TriggerDialog();
+                    break;
+                case "TARGET":
+                    other.transform.GetComponent<DialogueTrigger>().TriggerDialog();
+                    break;
+                case "TARGET_SECURITY":
+                    other.transform.GetComponent<DialogueTrigger>().TriggerDialog();
+                    break;
+                default:
+                    Debug.Log(other.name);
+                    break;
+            }
 
-                Debug.Log("DUDE ALREAD HAVE A HAT...");
 
-            }        
+            //    if (other.transform.Find("Hat_NPC") == null) {
 
+            //        TransferHat(other.gameObject);
+
+            //    } else {
+
+            //        Debug.Log("DUDE ALREAD HAVE A HAT...");
+
+            //    }        
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+
+        if (this.transform.tag == "Player" && other.tag == "NPC") {  
+            _dialogueManager.EnableDialogBox(false);
         }
     }
 }

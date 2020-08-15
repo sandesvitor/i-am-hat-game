@@ -143,7 +143,7 @@ public class DialogueManager : MonoBehaviour {
 
     public void SetPlayerChoice(int choice) {
         VD.nodeData.commentIndex = choice;
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetKeyDown(KeyCode.E)) {
             VD.Next();
         }
     }

@@ -6,6 +6,7 @@ public class ActionsManager : MonoBehaviour
 {
     private int beerCount = 0;
 
+
     public void PressTabForBartender(string tabPressed) {
         if (tabPressed == "o")
             Debug.Log(tabPressed);
@@ -16,9 +17,10 @@ public class ActionsManager : MonoBehaviour
 
     public void DrinkBeer() {
         beerCount++;
-        if(beerCount > 3) {
+        if(beerCount > 5) {
             Debug.Log("YOU VOMMITED");
             beerCount = 0;
         }
     }
+
 }

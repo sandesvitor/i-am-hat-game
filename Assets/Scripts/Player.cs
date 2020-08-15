@@ -59,13 +59,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) {
-            Cursor.visible = !Cursor.visible;
-            if (Cursor.visible)
-                Cursor.lockState = CursorLockMode.None;
-            else
-                Cursor.lockState = CursorLockMode.Locked;
-        }
+        //if (Input.GetMouseButtonDown(0)) {
+        //    Cursor.visible = !Cursor.visible;
+        //    if (Cursor.visible)
+        //        Cursor.lockState = CursorLockMode.None;
+        //    else
+        //        Cursor.lockState = CursorLockMode.Locked;
+        //}
 
         if (!VD.isActive) {
             CalculatingMovement();
@@ -134,8 +134,6 @@ public class Player : MonoBehaviour
         _hat.HatTransfer(newPlayer.transform);
         _invetoryManager.SetCurrentPlayerItems();
 
-        // chamar a função SetCurrentPlayerItems() para atualizar o inventório!
-
     }
 
 
@@ -148,21 +146,11 @@ public class Player : MonoBehaviour
         if(other.tag == "MusicBox") {
             _audioManager.EnableJukeboxPanel(true);
         }
-
-        //if (this.transform.tag == "Player" && other.tag == "NPC") {
-
-
-        //    if (other.transform.Find("Hat_NPC") == null) {
-
-        //        TransferHat(other.gameObject);
-
-        //    } else {
-
-        //        Debug.Log("DUDE ALREAD HAVE A HAT...");
-
-        //    }
-
+        
+        //if(other.tag == "NPC" && this.gameObject.tag == "Player") {
+        //    TransferHat(other.gameObject);
         //}
+   
     }
 
     private void OnTriggerExit(Collider other) {

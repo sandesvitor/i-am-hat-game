@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - MusicBox
+  - Stand
   layers:
   - Default
   - TransparentFX

@@ -35,7 +35,7 @@ public class Hat_Player : MonoBehaviour
 
     private IEnumerator LigthFlicker() {
         while (true) {
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(0.5f);
             _probeLight.enabled = _switchLight;
             _switchLight = !_switchLight;
         }

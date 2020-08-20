@@ -23,13 +23,12 @@ public class Hat_Player : MonoBehaviour
     void SetPosition() {
         this.transform.position = this.transform.parent.position
             + new Vector3(0, this.transform.parent.localScale.y - 0.10f, 0);
+
+        this.transform.rotation = this.transform.parent.rotation;
     }
 
     public void HatTransfer(Transform newParent) {
-        this.transform.parent = null;
-        this.transform.parent = newParent;
-
-        //this.transform.SetParent(newParent);
+        this.transform.SetParent(newParent);
         SetPosition();
     }
 

@@ -146,11 +146,12 @@ public class Player : MonoBehaviour
         if(other.tag == "MusicBox") {
             _audioManager.EnableJukeboxPanel(true);
         }
-        
-        //if(other.tag == "NPC" && this.gameObject.tag == "Player") {
-        //    TransferHat(other.gameObject);
-        //}
-   
+
+        if (other.tag == "NPC" && this.gameObject.tag == "Player")
+        {
+            TransferHat(other.gameObject);
+        }
+
     }
 
     private void OnTriggerExit(Collider other) {
